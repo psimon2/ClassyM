@@ -1,0 +1,54 @@
+Cache for Windows^INT^MUMPS.Net for Dummies^~Format=Cache.S~^RAW
+%RO on 15 Jun 2013   8:11 PM
+ASP^INT^1^62988,71993.504336^8
+ASP ;NEW PROGRAM [ 02/26/2005  8:37 PM ]
+DELETE(ID) ;
+ S CLASS=^ADS("ID",ID)
+ K ^ADS("ID",ID)
+ W "Ads",$c(163)
+ W "AdNum,Title,Category,Description,Price,Phone,Email,State,Password,Posted",$c(163)
+ W ID,$C(165),CLASS,$C(164)
+ Q
+ 
+CAT(cat) ;
+ W "Ads",$c(163)
+ W "AdNum,Title,Category,Description,Price,Phone,Email,State,Password,Posted",$c(163)
+ S ID=""
+ F  S ID=$O(^ADS("ID",ID)) Q:ID=""  D
+ .S REC=^ADS("ID",ID)
+ .I $P(REC,$C(165),2)'=cat Q
+ .W ID,$c(165),^ADS("ID",ID),$c(164)
+ .Q
+ Q
+ 
+ADD(title,desc,cat,price,phone,email,state,pass,posted) 
+ S Q=$C(165)
+ W "Ads",$C(163)
+ W "AdNum,Title,Category,Description,Price,Phone,Email,State,Password,Posted",$C(163)
+ S ID=$O(^ADS("ID",""),-1)+1
+ S ^ADS("ID",ID)=title_Q_cat_Q_desc_Q_price_Q_phone_Q_email_Q_state_Q_pass_Q_$ZD(+$H,4)_" 00:00:00"
+ S CLASS=^(ID)
+ W ID,Q,CLASS,$c(164)
+ Q
+ 
+ROW(ID) ;
+ W "Ads",$C(163)
+ W "AdNum,Title,Category,Description,Price,Phone,Email,State,Password,Posted",$C(163)
+ W ID,$C(165),^ADS("ID",ID),$c(164)
+ Q
+ 
+SEARCH(WHERE)
+ W "Ads",$C(163)
+ W "AdNum,Title,Category,Description,Price,Phone,Email,State,Password,Posted",$C(163)
+ W 1,$C(165),^ADS("ID",1),$c(164)
+ Q 
+UPDATE(PARAM) 
+ S ID=$P(PARAM,$C(165))
+ F I=2:1:$L(PARAM,$C(165)) S $P(^ADS("ID",ID),$C(165),(I-1))=$P(PARAM,$C(165),I)
+ W "Ads",$C(163)
+ W "AdNum,Title,Category,Description,Price,Phone,Email,State,Password,Posted",$C(163)
+ W ^ADS("ID",ID),$c(164)
+ Q
+
+
+
